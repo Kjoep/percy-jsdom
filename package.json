@@ -1,0 +1,42 @@
+{
+  "name": "percy-jsdom",
+  "version": "1.0.0",
+  "description": "Percy.io integration with JSDom",
+  "main": "index.js",
+  "author": "Joeri Hendrickx",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jsdom": "^16.2.1",
+    "@types/node": "^13.13.5"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "tsc",
+    "pretest": "npm run build",
+    "test": "percy exec -- mocha --opts ./mocha.opts tests/*spec.js",
+    "test-win": "npm run pretest && percy exec -- mocha.cmd --opts ./mocha.opts tests/*spec.js"
+  },
+  "peerDependencies": {
+    "jsdom": "^16.2.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@percy/agent": "~0"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/git"
+    ]
+  }
+}
